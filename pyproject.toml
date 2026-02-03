@@ -1,0 +1,31 @@
+[project]
+name = "painel-priorizacao"
+version = "0.1.0"
+description = "Script para geração de painel de visualização de alertas-regras-sinais."
+authors = [
+    {name = "Romulo",email = "romubah@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "pandas (<3.0.0)",
+    "streamlit (>=1.53.1,<2.0.0)",
+    "folium (>=0.20.0,<0.21.0)",
+    "streamlit-folium (>=0.26.1,<0.27.0)",
+    "plotly (>=6.5.2,<7.0.0)",
+    "isort (>=7.0.0,<8.0.0)",
+    "blue (>=0.9.1,<0.10.0)",
+    "pydocstyle (>=6.3.0,<7.0.0)",
+    "taskipy (>=1.14.1,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+format = "isort . && blue . && pydocstyle ."
+run = "streamlit run app.py"
