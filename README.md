@@ -1,16 +1,32 @@
-# Painel de Priorização de Perdas (Equatorial)
+# ⚡ Painel de Priorização de Perdas (Equatorial)
 
-Dashboard em **Streamlit** para visualizar e analisar UCs priorizadas pelo pipeline **alertas-regras-sinais**.
+> Dashboard em **Streamlit** para visualizar e analisar UCs priorizadas pelo pipeline **alertas-regras-sinais**.
 
-## O que ele faz
-- Upload de CSV (separador `;` e decimais com `,`).
-- Filtros globais (prioridade, motivo, seccional, alimentador, município, etc.).
-- Mapa interativo (Folium + MarkerCluster) com legenda e limite de pontos para performance.
-- Tabela detalhada com exportação do recorte filtrado.
-- Aba **Análise Estatística** com gráficos de barras (Plotly) e rótulos (estilo Excel/Power BI).
+## 🎯 Por que esse painel existe?
+Quando a priorização roda (alertas → regras → sinais), o time precisa **bater o olho** e responder rápido:
+- Onde estão concentradas as UCs críticas? 🗺️
+- Qual seccional/município tem mais oportunidades de recuperar energia? 📍
+- Como está a distribuição por prioridade (P1/P2/P3)? 🚦
 
-## Estrutura do projeto
-```
+Esse painel entrega isso em 2 cliques: **upload do CSV do ETL** e pronto.
+
+## ✅ O que ele faz (na prática)
+- 📤 Upload de CSV (separador `;` e decimais com `,`).
+- 🧰 Filtros globais (prioridade, motivo, seccional, alimentador, município, etc.).
+- 🗺️ Mapa interativo (Folium + MarkerCluster) com **legenda** e limite de pontos para performance.
+- 📋 Tabela detalhada com **exportação do recorte filtrado**.
+- 📊 Aba **Análise Estatística** com gráficos de barras (Plotly) + **rótulos de dados** (estilo Excel/Power BI).
+
+## 🧠 Como usar (workflow rápido)
+1. Faça o upload do CSV gerado pelo pipeline.
+2. Use os filtros para refinar o recorte.
+3. Veja:
+   - 📍 **Mapa** para localizar clusters/zonas
+   - 📊 **Estatística** para entender distribuição e volume
+   - 📋 **Tabela** para agir em cima das UCs
+
+## 🧱 Estrutura do projeto
+```text
 .
 ├── app.py
 ├── requirements.txt
@@ -29,29 +45,34 @@ Dashboard em **Streamlit** para visualizar e analisar UCs priorizadas pelo pipel
         └── table.py
 ```
 
-## Requisitos
-- Python 3.11+ (recomendado)
-- Dependências em `requirements.txt`
+## 🧩 Requisitos
+- 🐍 Python **3.12+** (recomendado)
+- Dependências em `pyproject.toml`
 
-## Como rodar localmente
-1) Crie e ative um ambiente virtual
+## ▶️ Rodando local (dev)
+1) Clone o projeto
 ```bash
-python -m venv .venv
+git clone https://github.com/romulobarreto/painel-priorizacao.git
+```
+
+2) Crie e ative o venv
+```bash
+poetry env use 3.12
 source .venv/bin/activate  # macOS/Linux
 # .venv\Scriptsctivate  # Windows
 ```
 
 2) Instale as dependências
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 3) Rode o app
 ```bash
-streamlit run app.py
+task run
 ```
 
-## Formato esperado do CSV
+## 🧾 Formato esperado do CSV
 O loader foi feito para CSV com:
 - Separador: `;`
 - Decimal: `,` (ex.: latitude/longitude)
@@ -65,26 +86,36 @@ Colunas mínimas esperadas:
 Colunas usadas pelos filtros/gráficos (se existirem no arquivo):
 - `STATUS_COMERCIAL`, `MOTIVO_PRIORIDADE`, `SECCIONAL`, `SE_AL_NORM`, `MUNICIPIO`, `CONDOMINIO`, `PERIMETRO`, `CLASSE_CONSUMO`
 
-## Observações de performance
+## 🚀 Deploy na Streamlit Community Cloud
+Repositório: https://github.com/romulobarreto/painel-priorizacao
+
+### Passo a passo
+1. Garanta que o app rode local (`streamlit run app.py`).
+2. Verifique que `pyproject.toml` está na raiz do repo.
+3. Acesse o Streamlit Cloud e conecte com seu GitHub.
+4. Selecione o repositório `romulobarreto/painel-priorizacao`.
+5. Configure:
+   - **Main file path:** `app.py`
+   - **Branch:** `main`
+6. Clique em **Deploy**.
+
+### Dicas de ouro (pra evitar dor de cabeça)
+- ✅ Se der erro de dependência, confira `pyproject.toml`.
+- ✅ Se der erro com caminho do logo, confira se o arquivo existe em `src/assets/` e o path está correto.
+- ✅ CSV muito grande? Use filtros para reduzir o volume no mapa (o app limita pontos por performance).
+
+## ⚙️ Performance
 - O mapa limita a quantidade de pontos (ex.: 5000) para não travar o navegador.
 - Use os filtros para reduzir o volume e navegar melhor.
 
-## Deploy (resumo)
-Você pode publicar de três jeitos comuns:
+## 🛣️ Roadmap (ideias)
+- 🧊 Cache do carregamento (`st.cache_data`)
+- 🔢 “Top N” configurável nos gráficos
+- 🖼️ Exportar gráficos como imagem
+- 🧭 Ranking de alimentadores / motivos por seccional
 
-### Opção A) Streamlit Community Cloud (mais simples)
-1. Suba o projeto no GitHub.
-2. Garanta que `requirements.txt` esteja na raiz e que o entrypoint seja `app.py`.
-3. No Streamlit Cloud, selecione o repositório e informe `app.py` como arquivo principal.
+---
 
-### Opção B) Docker (bom pra servidor interno)
-Crie um `Dockerfile` e rode em qualquer servidor.
+Feito com Streamlit + Plotly + Folium.
 
-### Opção C) Plataforma interna/empresa
-Subir em VM/servidor com systemd + nginx (ou só rodar o Streamlit em porta interna).
-
-## Próximos passos (ideias)
-- Cache de carregamento (`st.cache_data`)
-- “Top N” configurável nos gráficos
-- Exportar gráficos como imagem
-- Expandir a aba de *Análise Estatística* (rankings, cruzamentos, etc.)
+👨🏻‍💻 Autor Rômulo Barreto da Silva - Analista de Distribuição Pleno
