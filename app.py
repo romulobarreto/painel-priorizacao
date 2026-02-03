@@ -68,11 +68,11 @@ if uploaded_file:
             'alertas-regras-sinais da Regional Sul.'
         )
 
-        # Métricas fixas no topo
-        render_metrics(df)
-
         # Filtros globais (afetam ambas as abas)
         df_filtered = render_filters(df)
+
+        # Métricas dinâmicas (refletem os filtros)
+        render_metrics(df_filtered)
 
         # Criação das Abas
         tab_mapa, tab_estatistica = st.tabs(
