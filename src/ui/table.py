@@ -24,14 +24,16 @@ def render_table(df: pd.DataFrame) -> None:
         'FABRICANTE',
         'FASE',
         'MICRO_GERADOR',
-        'INST_MED_FISCAL',
         'ENDERECO',
         'CONDOMINIO',
+        'PERIMETRO',
         'BAIRRO',
         'MUNICIPIO',
         'SECCIONAL',
         'PRIORIDADE',
         'MOTIVO_PRIORIDADE',
+        'LATITUDE',
+        'LONGITUDE'
     ]
 
     # Filtra apenas colunas que existem

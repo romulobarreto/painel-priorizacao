@@ -81,7 +81,7 @@ def render_filters(df: pd.DataFrame) -> pd.DataFrame:
             df_filtered['MOTIVO_PRIORIDADE'].isin(f_motivo)
         ]
 
-    if f_motivo:
+    if f_status: 
         df_filtered = df_filtered[
             df_filtered['STATUS_COMERCIAL'].isin(f_status)
         ]
