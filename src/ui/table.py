@@ -25,6 +25,7 @@ def render_table(df: pd.DataFrame) -> None:
         'FASE',
         'MICRO_GERADOR',
         'ENDERECO',
+        'BAIRRO',
         'CONDOMINIO',
         'PERIMETRO',
         'BAIRRO',
