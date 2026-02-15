@@ -62,6 +62,12 @@ if uploaded_file:
     df = load_data(uploaded_file)
 
     if df is not None:
+        # --- ADICIONE ISSO AQUI ---
+        # Inicializa o estado da seleção do mapa se não existir
+        if 'map_selection' not in st.session_state:
+            st.session_state['map_selection'] = None
+        # --------------------------
+
         st.title('📊 Painel de Priorização de Perdas')
         st.markdown(
             'Visualize no mapa as UCs encontradas pelo sistema de '
