@@ -30,6 +30,7 @@ def render_table(df: pd.DataFrame) -> None:
         'BAIRRO',
         'MUNICIPIO',
         'SECCIONAL',
+        'CONSUMO_MEDIO',
         'PRIORIDADE',
         'MOTIVO_PRIORIDADE',
         'LATITUDE',
